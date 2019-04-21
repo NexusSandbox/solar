@@ -76,28 +76,6 @@ internal enum class TernaryVerifier(
                 else -> false
             }
 
-        }),
-    STRING_LENGTH_BETWEEN(
-        "Expected string[\"{2}\"] to have length between value[{3}] and value[{4}].",
-        { actual: Any?, minLength: Any?, maxLength: Any? ->
-            when (minLength) {
-                (minLength as Long) -> (actual as String).length >= minLength && actual.length <= (maxLength as Long)
-                (minLength as Int) -> (actual as String).length >= minLength && actual.length <= (maxLength as Int)
-                (minLength as Short) -> (actual as String).length >= minLength && actual.length <= (maxLength as Short)
-                (minLength as Byte) -> (actual as String).length >= minLength && actual.length <= (maxLength as Byte)
-                else -> false
-            }
-        }),
-    STRING_LENGTH_BETWEEN_NOT(
-        "Expected string[\"{2}\"] to have length outside value[{3}] and value[{4}].",
-        { actual: Any?, minLength: Any?, maxLength: Any? ->
-            when (minLength) {
-                (minLength as Long) -> (actual as String).length < minLength && actual.length > (maxLength as Long)
-                (minLength as Int) -> (actual as String).length < minLength && actual.length > (maxLength as Int)
-                (minLength as Short) -> (actual as String).length < minLength && actual.length > (maxLength as Short)
-                (minLength as Byte) -> (actual as String).length < minLength && actual.length > (maxLength as Byte)
-                else -> false
-            }
         });
 
     fun getMessage(className: String, fieldName: String, value1: Any?, value2: Any?, value3: Any?): String {
@@ -105,25 +83,6 @@ internal enum class TernaryVerifier(
             message,
             className,
             fieldName,
-            value1?.toString(),
-            value2?.toString(),
-            value3?.toString()
-        )
-    }
-
-    fun getMessage(
-        className: String,
-        fieldName1: String,
-        fieldName2: String,
-        value1: Any?,
-        value2: Any?,
-        value3: Any?
-    ): String {
-        return CommonVerifier.ASSERTION_FAILED_FIELDS_DOUBLE.appendContext(
-            message,
-            className,
-            fieldName1,
-            fieldName2,
             value1?.toString(),
             value2?.toString(),
             value3?.toString()

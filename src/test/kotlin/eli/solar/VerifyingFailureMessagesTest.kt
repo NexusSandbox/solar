@@ -13,7 +13,7 @@ class VerifyingFailureMessagesTest {
             verifying(this::class) {
                 ifTrue("field1", false)
                 ifFalse("field2", true)
-            }.thenThrow(::TestVerifierException)
+            }.elseThrow(::TestVerifierException)
         }
         assertEquals(
             """ |
@@ -28,7 +28,7 @@ class VerifyingFailureMessagesTest {
         val exception = assertThrows<TestVerifierException>("") {
             verifying(this::class) {
                 ifTrue("field1", false)
-            }.thenThrow(::TestVerifierException)
+            }.elseThrow(::TestVerifierException)
         }
         assertEquals(
             """ |
@@ -42,7 +42,7 @@ class VerifyingFailureMessagesTest {
         val exception = assertThrows<TestVerifierException>("") {
             verifying(this::class) {
                 ifFalse("field1", true)
-            }.thenThrow(::TestVerifierException)
+            }.elseThrow(::TestVerifierException)
         }
         assertEquals(
             """ |

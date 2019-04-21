@@ -37,17 +37,13 @@ internal enum class BinaryVerifier(private val message: String, private val pred
                 else -> actual.none { expected.contains(it) }
             }
         }),
-    COLLECTION_EQUAL("Expected collection[{2}] ≡ collection[{3}].",
+    COLLECTION_EQUALS("Expected collection[{2}] ≡ collection[{3}].",
         { actual: Any?, expected: Any? -> (actual as Collection<*>) == (expected as Collection<*>) }),
-    COLLECTION_EQUAL_NOT("Expected collection[{2}] ≠ collection[{3}].",
+    COLLECTION_EQUALS_NOT("Expected collection[{2}] ≠ collection[{3}].",
         { actual: Any?, expected: Any? -> (actual as Collection<*>) != (expected as Collection<*>) }),
-    STRING_EQUAL("Expected string[\"{2}\"] ≡ string[\"{3}\"].",
-        { actual: Any?, expected: Any? -> (actual as String) == (expected as String) }),
-    STRING_EQUAL_NOT("Expected string[\"{2}\"] ≠ string[\"{3}\"].",
-        { actual: Any?, expected: Any? -> (actual as String) != (expected as String) }),
-    VALUE_EQUAL("Expected value[{2}] ≡ value[{3}].",
+    VALUE_EQUALS("Expected value[{2}] ≡ value[{3}].",
         { actual: Any?, expected: Any? -> actual == expected }),
-    VALUE_EQUAL_NOT("Expected value[{2}] ≠ value[{3}].",
+    VALUE_EQUALS_NOT("Expected value[{2}] ≠ value[{3}].",
         { actual: Any?, expected: Any? -> actual != expected }),
     STRING_MATCHES("Expected string[\"{2}\"] to match pattern[\"{3}\"].",
         { actual: Any?, matcher: Any? ->
@@ -63,7 +59,7 @@ internal enum class BinaryVerifier(private val message: String, private val pred
                 else -> false
             }
         }),
-    COLLECTION_MATCHES_ALL_VALUES("Expected collection[{2}] to match all values with predicate.",
+    COLLECTION_MATCHES_ALL("Expected collection[{2}] to match all values with predicate.",
         { actual: Any?, matcher: Any? ->
             @Suppress("UNCHECKED_CAST")
             when (actual) {
@@ -72,7 +68,7 @@ internal enum class BinaryVerifier(private val message: String, private val pred
                 else -> false
             }
         }),
-    COLLECTION_MATCHES_ANY_VALUES("Expected collection[{2}] to match any values with predicate.",
+    COLLECTION_MATCHES_ANY("Expected collection[{2}] to match any values with predicate.",
         { actual: Any?, matcher: Any? ->
             @Suppress("UNCHECKED_CAST")
             when (actual) {
@@ -81,55 +77,12 @@ internal enum class BinaryVerifier(private val message: String, private val pred
                 else -> false
             }
         }),
-    COLLECTION_MATCHES_NO_VALUES("Expected collection[{2}] to match no values with predicate.",
+    COLLECTION_MATCHES_NONE("Expected collection[{2}] to match no values with predicate.",
         { actual: Any?, matcher: Any? ->
             @Suppress("UNCHECKED_CAST")
             when (actual) {
                 (actual as Collection<*>).isNullOrEmpty() -> true
                 (matcher as Function1<Any?, Boolean>) -> actual.none { matcher.invoke(it) }
-                else -> false
-            }
-        }),
-    STRING_LENGTH_WITHIN("Expected string[\"{2}\"] to have length < value[{3}].",
-        { actual: Any?, length: Any? ->
-            when (actual as String) {
-                actual -> actual.length < (length as Int)
-                else -> false
-            }
-        }),
-    STRING_LENGTH_WITHIN_NOT("Expected string[\"{2}\"] to have length ≥ value[{3}].",
-        { actual: Any?, length: Any? ->
-            when (actual as String) {
-                actual -> actual.length >= (length as Int)
-                else -> false
-            }
-        }),
-    STRING_LENGTH_EXCEEDS("Expected string[\"{2}\"] to have length > value[{3}].",
-        { actual: Any?, length: Any? ->
-            when (actual as String) {
-                actual -> actual.length > (length as Int)
-                else -> false
-            }
-        }),
-    STRING_LENGTH_EXCEEDS_NOT(
-        "Expected string[\"{2}\"] to have length ≤ value[{3}].",
-        { actual: Any?, length: Any? ->
-            when (actual as String) {
-                actual -> actual.length <= (length as Int)
-                else -> false
-            }
-        }),
-    STRING_LENGTH_IS("Expected string[\"{2}\"] to have length equal to value[{3}].",
-        { actual: Any?, length: Any? ->
-            when (actual as String) {
-                actual -> actual.length == (length as Int)
-                else -> false
-            }
-        }),
-    STRING_LENGTH_IS_NOT("Expected string[\"{2}\"] to have length not equal to value[{3}].",
-        { actual: Any?, length: Any? ->
-            when (actual as String) {
-                actual -> actual.length != (length as Int)
                 else -> false
             }
         });

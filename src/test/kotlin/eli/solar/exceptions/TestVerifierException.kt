@@ -1,3 +1,3 @@
 package eli.solar.exceptions
 
-class TestVerifierException constructor(messages: Collection<String>) : CompositeException(messages)
+class TestVerifierException constructor(messages: Collection<String>) : AbstractCompositeException(messages)
